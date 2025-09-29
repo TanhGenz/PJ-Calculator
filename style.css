@@ -1,0 +1,99 @@
+body {
+    width: auto;
+    margin: 0;
+    background-color: antiquewhite;
+
+}
+
+/* chứa cái bảng tính */
+.container-wrapper {
+    height: 100vh;
+    /* để đẩy phần tử vào giữa */
+    display: flex;
+    /* canh ngang (center: canh giua) */
+    justify-content: center;
+    /* canh doc (center: canh giua) */
+    align-items: center;
+}
+
+/* kích thước bản tính */
+.wrapper {
+    background-color: black;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.calculator-screen-container-wrapper {
+    display: flex;
+    margin: 10px;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
+
+}
+
+.calculator-button-container-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* 5 cột đều nhau */
+    gap: 10px;
+    /* khoảng cách giữa các nút */
+    margin: 10px;
+}
+
+button {
+    width: 10rem;
+    height: 50px;
+    border-radius: 25px;
+    font-size: larger;
+    font-weight: 800;
+    color: #FFFFFF;
+}
+
+.btn-number {
+    background-color: #393838;
+}
+
+.btn-ac,
+.btn-ed,
+.btn-percent {
+    background-color: #5B5A60;
+}
+
+.btn-math {
+    background-color: #FF9F0C;
+}
+
+
+
+p {
+    color: white;
+    font-size: 3rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+
+@media (max-width: 768px) {
+    .calculator-button-container-wrapper {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* 5 cột đều nhau */
+        gap: 3px;
+        /* khoảng cách giữa các nút */
+        margin: 10px;
+    }
+
+
+
+    button {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 100px;
+        font-size: larger;
+        font-weight: 400;
+        color: #FFFFFF;
+    }
+}
