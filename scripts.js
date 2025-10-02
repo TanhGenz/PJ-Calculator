@@ -1,5 +1,4 @@
 let currentInput = "0";
-
 // ban đầu màn hình
 function updateDisplay() {
     document.getElementById("screen").innerText = currentInput;
@@ -72,55 +71,65 @@ function appendDecimal() {
 
 //chuyển đổi dấu +/-
 function toggleSign() {
-    const operators = ['+', '-', '*', '/'];
-    const lastChar = currentInput.slice(-1);
+    if (!currentInput || currentInput === '0' || currentInput === '-0') return;
 
-    // nếu ký tự cuối là toán tử → bỏ qua
-    if (operators.includes(lastChar)) return;
-    if (currentInput === '0' || currentInput === '-0') return;
-
-    // nếu chỉ có một số → toggle trực tiếp
-    if (
-        currentInput.indexOf('+') === -1 &&
-        currentInput.indexOf('-') === -1 &&
-        currentInput.indexOf('*') === -1 &&
-        currentInput.indexOf('/') === -1
-    ) {
-        currentInput = currentInput.startsWith('-')
-            ? currentInput.slice(1)
-            : '-' + currentInput;
+    // 1) Nếu chỉ là 1 số (có/không dấu âm) → đảo dấu trực tiếp
+    if (/^-?\d+(\.\d+)?$/.test(currentInput)) {
+        if (currentInput.charAt(0) === '-') currentInput = currentInput.slice(1);
+        else currentInput = '-' + currentInput;
         updateDisplay();
         return;
     }
 
-    // tìm toán tử cuối
-    let lastOpIndex = Math.max(
-        currentInput.lastIndexOf('+'),
-        currentInput.lastIndexOf('-'),
-        currentInput.lastIndexOf('*'),
-        currentInput.lastIndexOf('/')
-    );
+    // 2) Có biểu thức: bắt toán tử cuối + toán hạng cuối (số có thể là (-n) hoặc -n hoặc n)
+    //    before | op | term
+    let m = currentInput.match(/^(.*?)([+\-*/])(\(-?\d*\.?\d+\)|-?\d*\.?\d+)$/);
+    if (!m) return; // không khớp → không xử lý
+    let before = m[1];
+    let op = m[2];
+    let term = m[3];
 
-    let beforeOp = currentInput.slice(0, lastOpIndex);       // ví dụ: "5"
-    let op = currentInput[lastOpIndex];                // ví dụ: "+"
-    let afterOp = currentInput.slice(lastOpIndex + 1);      // ví dụ: "5" hoặc "(-5)"
+    // Chuẩn hoá toán hạng cuối về dạng "số dương" + cờ isNeg
+    let isNeg = false;
+    let num = term;
 
-    if (op === '+' || op === '-') {
-        // đổi dấu toán tử
-        op = (op === '+') ? '-' : '+';
-        currentInput = beforeOp + op + afterOp;
-    } else {
-        // * hoặc / thì toggle số cuối
-        if (afterOp.startsWith('(-') && afterOp.endsWith(')')) {
-            afterOp = afterOp.slice(2, -1); // bỏ ngoặc
-        } else if (afterOp.startsWith('-')) {
-            afterOp = afterOp.slice(1); // "-5" → "5"
+    if (term.charAt(0) === '(') {
+        // dạng "(-123)" → lấy "123", đánh dấu âm
+        if (term.indexOf('(-') === 0 && term.charAt(term.length - 1) === ')') {
+            num = term.slice(2, -1);
+            isNeg = true;
         } else {
-            afterOp = `(-${afterOp})`;  // "5" → "(-5)"
+            // hiếm gặp: "(123)" → coi như dương
+            num = term.slice(1, -1);
         }
-        currentInput = beforeOp + op + afterOp;
+    } else if (term.charAt(0) === '-') {
+        // dạng "-123"
+        num = term.slice(1);
+        isNeg = true;
+    } else {
+        // "123"
+        num = term;
+        isNeg = false;
     }
 
+    // 3) Toggle theo loại toán tử
+    if (op === '+' || op === '-') {
+        // Quy tắc:
+        // - nếu term đang âm → giữ nguyên op, biến term thành dương
+        // - nếu term đang dương → đổi op: '+' <-> '-', term giữ dương
+        let newOp = isNeg ? op : (op === '+' ? '-' : '+');
+        currentInput = before + newOp + num; // luôn để số dương, op quyết định dấu
+    } else {
+        // op là '*' hoặc '/'
+        // Quy tắc:
+        // - nếu term đang âm → bỏ âm (trả về dương)
+        // - nếu term đang dương → bọc thành "(-num)" để an toàn ưu tiên toán tử
+        if (isNeg) {
+            currentInput = before + op + num;          // "12*-34" → "12*34" | "12*(-34)" → "12*34"
+        } else {
+            currentInput = before + op + '(-' + num + ')'; // "12*34" → "12*(-34)"
+        }
+    }
     updateDisplay();
 }
 
