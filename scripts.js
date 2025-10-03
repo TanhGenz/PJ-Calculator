@@ -16,6 +16,7 @@ function appendValue(value) {
     if (value === "x") value = '*'
     if (value === ":") value = '/'
 
+
     if (operators.includes(value)) {  // nếu đang bấm dấu + - * /
         if (operators.includes(lastdemi)) {
             let secondCurent = currentInput.replace(/.$/, value);
@@ -39,10 +40,20 @@ function calc() {
     updateSeDisplay()
     let validateWhiteList = /^[0-9+\-*/().\s]+$/;  // cho một biến nhận điều kiện chỉ được tính (text không nhận)
     if (validateWhiteList.test(currentInput)) { // nếu mà currentinput nhập có cái đó
+        // nếu input kết thúc bằng toán tử hoặc dấu chấm thì sẽ = 0
+        if (/[+\-*/.]$/.test(currentInput)) {
+            clearCal();
+            return;
+        }
         // let ketQua = eval (currentInput)
         let ketQua = Function('"use strict"; return (' + currentInput + ')')();
+        console.log(typeof ketQua)
+        // nếu tính kết quả = 0 không cho gõ 000000
+        if (ketQua === 0) {
+            clearCal();
+            return;
+        }
         currentInput = ketQua;
-        console.log(ketQua)
         updateDisplay();
         return;
     } else {
@@ -83,7 +94,7 @@ function toggleSign() {
 
     // 2) Có biểu thức: bắt toán tử cuối + toán hạng cuối (số có thể là (-n) hoặc -n hoặc n)
     //    before | op | term
-    let m = currentInput.match(/^(.*?)([+\-*/])(\(-?\d*\.?\d+\)|-?\d*\.?\d+)$/);
+    let m = currentInput.match(/^ (.*?) ([+\-*/]) (\(-?\d*\.?\d+\)|-?\d*\.?\d+) $/);
     if (!m) return; // không khớp → không xử lý
     let before = m[1];
     let op = m[2];
