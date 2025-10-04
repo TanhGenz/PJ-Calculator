@@ -75,6 +75,9 @@ p {
     margin: 0;
 }
 
+.calculator-button-container-wrapper.mobile-layout {
+    display: none;
+}
 
 @media (max-width: 768px) {
     .calculator-button-container-wrapper {
@@ -94,4 +97,13 @@ p {
         font-weight: 400;
         color: #FFFFFF;
     }
+
+    .calculator-button-container-wrapper {
+        display: none;
+    }
+
+    .calculator-button-container-wrapper.mobile-layout {
+        display: grid;
+    }
+
 }
