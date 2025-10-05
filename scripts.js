@@ -180,8 +180,10 @@ function percentage() {
 function del (){
      if (currentInput === "0") return;
      if (currentInput.length === 1){ 
+        let secondIn = ""
         let del = currentInput.replace(currentInput, "0")
         currentInput = del;
+        document.getElementById("screen-second").innerText = secondIn;
         updateDisplay(); 
         return;
     } 
