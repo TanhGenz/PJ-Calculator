@@ -177,16 +177,6 @@ function percentage() {
     updateDisplay();
 }
 
-<<<<<<< HEAD
-function del() {
-    if (currentInput === "0") return;
-    if (currentInput.length === 1) {
-        let del = currentInput.replace(currentInput, "0")
-        currentInput = del;
-        let secondIn = ""
-        document.getElementById("screen-second").innerText = secondIn;
-        updateDisplay();
-=======
 function del (){
      if (currentInput === "0") return;
      if (currentInput.length === 1){ 
@@ -195,7 +185,6 @@ function del (){
         currentInput = del;
         document.getElementById("screen-second").innerText = secondIn;
         updateDisplay(); 
->>>>>>> 6a208dba0859c3e5206d698ccb27de494d89b82e
         return;
     }
 
