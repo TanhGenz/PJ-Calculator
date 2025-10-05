@@ -79,6 +79,21 @@ p {
     display: none;
 }
 
+
+#screen-second {
+    color: white;
+    font-size: 20px;
+    font-weight: 50;
+}
+
+#screen {
+    color: white;
+    font-size: 3rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+
 @media (max-width: 768px) {
     .calculator-button-container-wrapper {
         display: grid;
@@ -86,7 +101,7 @@ p {
         /* 5 cột đều nhau */
         gap: 3px;
         /* khoảng cách giữa các nút */
-        margin: 10px;
+        margin: 7px 7px 0 7px;
     }
 
     button {
@@ -105,5 +120,20 @@ p {
     .calculator-button-container-wrapper.mobile-layout {
         display: grid;
     }
+
+    #screen {
+        color: white;
+        font-size: 2rem;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .calculator-screen-container-wrapper {
+    display: flex;
+    margin: 7px 7px 0 7px;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
+}
 
 }

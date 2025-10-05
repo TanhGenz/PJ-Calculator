@@ -12,10 +12,9 @@
     <div class="container-wrapper">
         <div class="wrapper">
             <div class="calculator-screen-container-wrapper">
-                <div id="screen-second" style="color: white; font-size: 20px; font-weight: 50;">
+                <div id="screen-second">
                 </div>
-                <div id="screen" style="color: white; font-size: 3rem; font-weight: 400; margin: 0;">
-
+                <div id="screen">
                 </div>
             </div>
 
@@ -42,7 +41,7 @@
                 <button class="btn-math" onclick="appendValue('+')">+</button>
             </div>
 
-             <div class="calculator-button-container-wrapper mobile-layout">   <!-- mobile hiện -->
+            <div class="calculator-button-container-wrapper mobile-layout"> <!-- mobile hiện -->
                 <button class="btn-ac" onclick="clearCal()">AC</button>
                 <button class="btn-ed" onclick="toggleSign('-')">+/-</button>
                 <button class="btn-percent" onclick="percentage()">%</button>
@@ -57,12 +56,12 @@
                 <button class="btn-number" onclick="appendValue('5')">5</button>
                 <button class="btn-number" onclick="appendValue('6')">6</button>
                 <button class="btn-math" onclick="appendValue('-')">-</button>
-                
+
                 <button class="btn-number" onclick="appendValue('1')">1</button>
                 <button class="btn-number" onclick="appendValue('2')">2</button>
                 <button class="btn-number" onclick="appendValue('3')">3</button>
                 <button class="btn-math" onclick="appendValue('+')">+</button>
-                
+
                 <button class="btn-number" onclick="del()">➤</button>
                 <button class="btn-number" onclick="appendValue('0')">0</button>
                 <button class="btn-number" onclick="appendDecimal('.')">,</button>

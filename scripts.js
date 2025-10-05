@@ -177,18 +177,38 @@ function percentage() {
     updateDisplay();
 }
 
-function del (){
-     if (currentInput === "0") return;
-     if (currentInput.length === 1){ 
+function del() {
+    if (currentInput === "0") return;
+    if (currentInput.length === 1) {
         let del = currentInput.replace(currentInput, "0")
         currentInput = del;
-        updateDisplay(); 
+        let secondIn = ""
+        document.getElementById("screen-second").innerText = secondIn;
+        updateDisplay();
         return;
-    } 
+    }
 
     currentInput = String(currentInput).slice(0, -1); // Xóa ký tự cuối cùng
     updateDisplay();
 }
+
+function handleKeyPress(event) {
+    let key = event.key;
+    if (/^[0-9]$/.test(key)) {
+        appendValue(key);
+    }
+
+    if (key === "+") appendValue("+");
+    if (key === "-") appendValue("-");
+    if (key === "*") appendValue("*");
+    if (key === "/") appendValue("/");
+
+    if (key === "Backspace") del();
+    if (key === "Enter" || key === "=") calc();
+    if (key === "Escape") clearCal();
+}
+// Gán sự kiện ở ngoài
+document.addEventListener("keydown", handleKeyPress);
 
 function clearCal() {
     currentInput = "0"
