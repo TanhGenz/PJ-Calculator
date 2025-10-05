@@ -177,6 +177,19 @@ function percentage() {
     updateDisplay();
 }
 
+function del (){
+     if (currentInput === "0") return;
+     if (currentInput.length === 1){ 
+        let del = currentInput.replace(currentInput, "0")
+        currentInput = del;
+        updateDisplay(); 
+        return;
+    } 
+
+    currentInput = String(currentInput).slice(0, -1); // Xóa ký tự cuối cùng
+    updateDisplay();
+}
+
 function clearCal() {
     currentInput = "0"
     secondIn = ""
