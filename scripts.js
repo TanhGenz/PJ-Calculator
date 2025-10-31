@@ -94,7 +94,7 @@ function toggleSign() {
 
     // 2) Có biểu thức: bắt toán tử cuối + toán hạng cuối (số có thể là (-n) hoặc -n hoặc n)
     //    before | op | term
-    let m = currentInput.match(/^ (.*?) ([+\-*/]) (\(-?\d*\.?\d+\)|-?\d*\.?\d+) $/);
+    let m = currentInput.match(/^(.*?)([+\-*/])(\(-?\d*\.?\d+\)|-?\d*\.?\d+)$/);
     if (!m) return; // không khớp → không xử lý
     let before = m[1];
     let op = m[2];
@@ -177,14 +177,14 @@ function percentage() {
     updateDisplay();
 }
 
-function del (){
-     if (currentInput === "0") return;
-     if (currentInput.length === 1){ 
+function del() {
+    if (currentInput === "0") return;
+    if (currentInput.length === 1) {
         let secondIn = ""
         let del = currentInput.replace(currentInput, "0")
         currentInput = del;
         document.getElementById("screen-second").innerText = secondIn;
-        updateDisplay(); 
+        updateDisplay();
         return;
     }
 
@@ -197,11 +197,11 @@ function handleKeyPress(event) {
     if (/^[0-9]$/.test(key)) {
         appendValue(key);
     }
-
     if (key === "+") appendValue("+");
     if (key === "-") appendValue("-");
     if (key === "*") appendValue("*");
     if (key === "/") appendValue("/");
+    if (key === "." || key === ",") appendDecimal();
 
     if (key === "Backspace") del();
     if (key === "Enter" || key === "=") calc();
